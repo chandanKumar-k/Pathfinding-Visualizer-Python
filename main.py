@@ -11,10 +11,10 @@ WHITE = (255, 255, 255)    # Unvisited Node
 BLACK = (0, 0, 0)          # Wall / Obstacle
 GRAY = (200, 200, 200)      # Grid Line
 ORANGE = (255, 165, 0)      # Start Node
-TURQUOISE = (64, 224, 208)  # End Node
+PURPLE = (255, 255, 0)      # End Node
 RED = (255, 0, 0)          # Visited / Searched Node
 GREEN = (0, 255, 0)        # Node currently in the queue
-YELLOW = (255, 255, 0)     # Final Shortest Path
+YELLOW = (200, 0, 200)     # Final Shortest Path
 
 # 2. Node Class representing each square on the grid
 class Node:
@@ -44,7 +44,7 @@ class Node:
         self.color = BLACK
 
     def make_end(self):
-        self.color = TURQUOISE
+        self.color = PURPLE
 
     def make_visited(self):
         self.color = RED
@@ -167,13 +167,15 @@ def main(win, width):
                 pos = pygame.mouse.get_pos()
                 row, col = get_clicked_pos(pos, ROWS, width)
                 node = grid[row][col]
-                if not start and node != end:
+                if node == start or node == end:
+                    continue
+                if not start:
                     start = node
                     start.make_start()
-                elif not end and node != start:
+                elif not end:
                     end = node
                     end.make_end()
-                elif node != end and node != start:
+                else:
                     node.make_wall()
 
             # Right Click Action (Clear Node)
